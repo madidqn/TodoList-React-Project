@@ -2,11 +2,22 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
+  const url = "http://localhost:5000/todo";
   const [task, setTask] = useState("");
   const [todos, setTodos] = useState([]);
   function submit(e) {
     e.preventDefault();
     console.log(task);
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify({
+        task: task,
+        checked: true,
+      }),
+      headers: {
+        "Content-type": "aplication/json",
+      },
+    });
     setTodos(task);
     setTask("");
   }
