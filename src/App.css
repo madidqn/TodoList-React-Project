@@ -1,0 +1,108 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: sans-serif;
+  background-color: rgba(180, 143, 96, 0.532);
+}
+#root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.app {
+  width: 80%;
+  height: 80%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 20px;
+}
+.app > div {
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  row-gap: 1.5rem;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+}
+h2 {
+  font-size: 2rem;
+  color: rgb(192, 87, 49);
+}
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+}
+form > div {
+  width: 100%;
+  display: flex;
+}
+form > div input {
+  width: 100%;
+  border: none;
+  padding-left: 5px;
+  outline: none;
+}
+form > div input:first-child {
+  width: 80%;
+  height: 35px;
+}
+input[type="checkbox"] {
+  /* appearance: none;
+  width: ; */
+}
+form > div input:last-child {
+  width: 20%;
+}
+form button {
+  height: 38px;
+  background-color: chocolate;
+  color: white;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+form button:hover {
+  opacity: 0.9;
+}
+ul {
+  padding: 10px 0;
+  border: 2px solid green;
+  min-height: 223px;
+  max-height: 223px;
+}
+ul > div {
+  display: flex;
+  align-items: center;
+  border: 2px solid red;
+  padding: 10px 5px;
+}
+ul > div li {
+  width: 70%;
+}
+ul > div > div {
+  width: 30%;
+  text-align: center;
+}
+.app > div:last-child {
+}
+.app > div:last-child ul {
+  padding: 10px;
+  border: 2px solid green;
+  min-height: 79%;
+  max-height: 79%;
+  width: 100%;
+}
