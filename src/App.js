@@ -41,7 +41,7 @@ function App() {
         </form>
       </div>
       <div>
-        <h2>Todo List</h2>
+        <h2>Todo Done</h2>
         <ul>
           <div>
             <li>task</li>
@@ -56,7 +56,7 @@ function App() {
             <div>
               <i class="bx bxs-trash"></i>
               <i class="bx bxs-edit-alt"></i>
-              <i class="bx bx-select-multiple"></i>
+              <i class="bx bx-redo bx-rotate-180"></i>
             </div>
           </div>
         </ul>

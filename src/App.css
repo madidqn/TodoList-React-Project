@@ -81,6 +81,7 @@ ul {
   padding: 10px 0;
   min-height: 223px;
   max-height: 223px;
+  /* overflow-y: scroll; */
 }
 ul > div {
   display: flex;
@@ -102,11 +103,13 @@ ul > div > div i {
   margin: 0 6px;
   font-size: 1.5rem;
   cursor: pointer;
+  color: aliceblue;
   background-color: rgb(192, 87, 49);
   padding: 3px 2px;
 }
 ul > div > div i:hover {
   background-color: aliceblue;
+  color: rgb(192, 87, 49);
 }
 /* .app > div:last-child {
 } */
