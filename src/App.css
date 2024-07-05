@@ -26,7 +26,7 @@ body {
   column-gap: 20px;
 }
 .app > div {
-  border: 2px solid black;
+  border: 2px solid rgb(192, 87, 49);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -60,8 +60,7 @@ form > div input:first-child {
   height: 35px;
 }
 input[type="checkbox"] {
-  /* appearance: none;
-  width: ; */
+  cursor: pointer;
 }
 form > div input:last-child {
   width: 20%;
@@ -80,15 +79,17 @@ form button:hover {
 }
 ul {
   padding: 10px 0;
-  border: 2px solid green;
   min-height: 223px;
   max-height: 223px;
 }
 ul > div {
   display: flex;
   align-items: center;
-  border: 2px solid red;
+  border: 2px solid rgb(192, 87, 49);
   padding: 10px 5px;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  margin-bottom: 7px;
 }
 ul > div li {
   width: 70%;
@@ -97,11 +98,20 @@ ul > div > div {
   width: 30%;
   text-align: center;
 }
-.app > div:last-child {
+ul > div > div i {
+  margin: 0 6px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  background-color: rgb(192, 87, 49);
+  padding: 3px 2px;
 }
+ul > div > div i:hover {
+  background-color: aliceblue;
+}
+/* .app > div:last-child {
+} */
 .app > div:last-child ul {
   padding: 10px;
-  border: 2px solid green;
   min-height: 79%;
   max-height: 79%;
   width: 100%;

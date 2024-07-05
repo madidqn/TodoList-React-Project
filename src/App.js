@@ -16,9 +16,25 @@ function App() {
             <div>
               <li>task</li>
               <div>
-                <i>delete</i>
-                <i>edit</i>
-                <i>done</i>
+                <i class="bx bxs-trash"></i>
+                <i class="bx bxs-edit-alt"></i>
+                <i class="bx bx-select-multiple"></i>
+              </div>
+            </div>
+            <div>
+              <li>task</li>
+              <div>
+                <i class="bx bxs-trash"></i>
+                <i class="bx bxs-edit-alt"></i>
+                <i class="bx bx-select-multiple"></i>
+              </div>
+            </div>
+            <div>
+              <li>task</li>
+              <div>
+                <i class="bx bxs-trash"></i>
+                <i class="bx bxs-edit-alt"></i>
+                <i class="bx bx-select-multiple"></i>
               </div>
             </div>
           </ul>
@@ -30,9 +46,17 @@ function App() {
           <div>
             <li>task</li>
             <div>
-              <i>delete</i>
-              <i>edit</i>
-              <i>done</i>
+              <i class="bx bxs-trash"></i>
+              <i class="bx bxs-edit-alt"></i>
+              <i class="bx bx-redo bx-rotate-180"></i>
+            </div>
+          </div>
+          <div>
+            <li>task</li>
+            <div>
+              <i class="bx bxs-trash"></i>
+              <i class="bx bxs-edit-alt"></i>
+              <i class="bx bx-select-multiple"></i>
             </div>
           </div>
         </ul>
