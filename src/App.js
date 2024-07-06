@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Form from "./components/form/Form";
 import "./App.css";
 
 function App() {
@@ -133,7 +134,7 @@ function App() {
     <div className="app">
       <div>
         <h2>Todo List</h2>
-        <form onSubmit={(e) => submit(e)}>
+        {/* <form onSubmit={(e) => submit(e)}>
           <div>
             <input
               type="text"
@@ -154,7 +155,16 @@ function App() {
           >
             Edit
           </button>
-        </form>
+        </form> */}
+        <Form
+          submit={submit}
+          value={inputValue}
+          setInputValue={setInputValue}
+          setCheckBox={setCheckBox}
+          checked={checkBox}
+          edit={edit}
+          editTask={editTask}
+        />
         <ul>
           {todos.map((todo) => (
             <div key={todo.id}>
