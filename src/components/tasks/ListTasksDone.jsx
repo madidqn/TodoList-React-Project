@@ -1,6 +1,24 @@
-function ListTasksDone({ todoDone, deleteTask, sendToUndoTasks }) {
+function ListTasksDone({ todoDone, deleteTask, url }) {
+  function sendToUndoTasks(id) {
+    const filterData = todoDone.filter((user) => user.id === id);
+    deleteTask(id, "todoDone");
+    try {
+      fetch(`${url}todo`, {
+        method: "POST",
+        body: JSON.stringify({
+          task: filterData[0].task,
+          checked: filterData[0].checked,
+        }),
+        headers: {
+          "Content-type": "aplication/json",
+        },
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
   return (
-    <ul>
+    <ul style={todoDone.lentgh > 6 ? { overflowY: "scroll" } : ""}>
       {todoDone.map((todo) => (
         <div key={todo.id}>
           <li>{todo.task}</li>
