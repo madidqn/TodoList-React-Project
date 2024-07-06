@@ -1,3 +1,6 @@
+import InputTask from "./InputTask";
+import InputCheckBox from "./InputCheckBox";
+
 function Form({
   submit,
   inputValue,
@@ -10,17 +13,18 @@ function Form({
   return (
     <form onSubmit={(e) => submit(e)}>
       <div>
-        <input
+        {/* <input
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-        />
+        /> */}
         <InputTask inputValue={inputValue} setInputValue={setInputValue} />
-        <input
+        {/* <input
           type="checkbox"
           onChange={(e) => setCheckBox(e.target.checked)}
           checked={checked}
-        />
+        /> */}
+        <InputCheckBox setCheckBox={setCheckBox} checked={checked} />
       </div>
       <button className={!edit ? "" : "noneActive"}>Add</button>
       <button
