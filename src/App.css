@@ -77,6 +77,9 @@ form button {
 form button:hover {
   opacity: 0.9;
 }
+.noneActive {
+  display: none;
+}
 ul {
   width: 100%;
   padding: 10px 0;
