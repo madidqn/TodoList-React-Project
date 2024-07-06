@@ -2,33 +2,39 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
-  const url = "http://localhost:5000/todo";
-  const [task, setTask] = useState("");
-  const [check, setCheck] = useState(false);
+  //const url = "http://localhost:5000/todo";
+  const url = "http://localhost:5000/";
+  const [inputValue, setInputValue] = useState("");
+  const [checkBox, setCheckBox] = useState(false);
   const [edit, setEdit] = useState(false);
   const [todos, setTodos] = useState([]);
+  const [todoDone, setTodoDone] = useState([]);
   const [idTask, setIdTask] = useState(0);
-  // const [singleTask, setSingleTask] = useState("");
+  // completed tasks//
   function submit(e) {
     e.preventDefault();
     //post data
-    fetch(url, {
-      method: "POST",
-      body: JSON.stringify({
-        task: task,
-        checked: check,
-      }),
-      headers: {
-        "Content-type": "aplication/json",
-      },
-    });
-    setCheck(false);
-    setTask("");
+    try {
+      fetch(`${url}todo`, {
+        method: "POST",
+        body: JSON.stringify({
+          task: inputValue,
+          checked: checkBox,
+        }),
+        headers: {
+          "Content-type": "aplication/json",
+        },
+      });
+      setCheckBox(false);
+      setInputValue("");
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   // get data
   async function getData() {
-    const response = await fetch(url);
+    const response = await fetch(`${url}todo`);
     const data = await response.json();
     setTodos(data);
   }
@@ -37,39 +43,88 @@ function App() {
   function deleteTask(id) {
     let confirmation = window.confirm("Are you shure?");
     if (confirmation) {
-      fetch(url + `/${id}`, {
+      fetch(`${url}todo/${id}`, {
         method: "DELETE",
       });
     }
   }
   // get task
   function getTask(id) {
-    // const response = await fetch(url + `/${id}`);
-    // const task = await response.json();
-    // setSingleTask(task);
     setEdit(true);
     const filterData = todos.filter((user) => user.id === id);
-    setTask(filterData[0].task);
-    setCheck(filterData[0].checked);
+    setInputValue(filterData[0].task);
+    setCheckBox(filterData[0].checked);
     setIdTask(filterData[0].id);
-    // console.log(filterData[0].task);
-    //  editTask(id);
   }
   // edit task
   function editTask() {
-    fetch(url + `/${idTask}`, {
+    fetch(`${url}todo/${idTask}`, {
       method: "PATCH",
       body: JSON.stringify({
-        task: task,
-        checked: check,
+        task: inputValue,
+        checked: checkBox,
       }),
       headers: {
         "Content-type": "aplication/json",
       },
+      // headers: { "Access-Control-Allow-Origin": "*" },
     });
     setEdit(false);
-    setCheck(false);
-    setTask("");
+    setCheckBox(false);
+    setInputValue("");
+  }
+  // list done
+  // postTask
+  // "http://localhost:5000/todoDone"
+  function postTask(id) {
+    const filterData = todos.filter((user) => user.id === id);
+    deleteTask(id);
+    try {
+      fetch(`${url}todoDone`, {
+        method: "POST",
+        body: JSON.stringify({
+          task: filterData[0].task,
+          checked: filterData[0].checked,
+        }),
+        headers: {
+          "Content-type": "aplication/json",
+        },
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  async function getDone() {
+    const response = await fetch(`${url}todoDone`);
+    const data = await response.json();
+    setTodoDone(data);
+  }
+  getDone();
+  function deleteTaskDone(id) {
+    let confirmation = window.confirm("Are you shure?");
+    if (confirmation) {
+      fetch(`${url}todoDone/${id}`, {
+        method: "DELETE",
+      });
+    }
+  }
+  function postTaskDone(id) {
+    const filterData = todoDone.filter((user) => user.id === id);
+    deleteTaskDone(id);
+    try {
+      fetch(url, {
+        method: "POST",
+        body: JSON.stringify({
+          task: filterData[0].task,
+          checked: filterData[0].checked,
+        }),
+        headers: {
+          "Content-type": "aplication/json",
+        },
+      });
+    } catch (e) {
+      console.log(e);
+    }
   }
   return (
     <div className="app">
@@ -79,16 +134,16 @@ function App() {
           <div>
             <input
               type="text"
-              value={task}
-              onChange={(e) => setTask(e.target.value)}
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
             />
             <input
               type="checkbox"
-              onChange={(e) => setCheck(e.target.checked)}
-              checked={check}
+              onChange={(e) => setCheckBox(e.target.checked)}
+              checked={checkBox}
             />
           </div>
-          <button>Add</button>
+          <button className={!edit ? "" : "noneActive"}>Add</button>
           <button
             type="button"
             className={edit ? "" : "noneActive"}
@@ -98,20 +153,23 @@ function App() {
           </button>
         </form>
         <ul>
-          {todos.map((user) => (
-            <div key={user.id}>
-              <li>{user.task}</li>
+          {todos.map((todo) => (
+            <div key={todo.id}>
+              <li>{todo.task}</li>
               <div>
-                {user.checked}
+                {todo.checked}
                 <i
                   className="bx bxs-trash"
-                  onClick={() => deleteTask(user.id)}
+                  onClick={() => deleteTask(todo.id)}
                 ></i>
                 <i
                   className="bx bxs-edit-alt"
-                  onClick={() => getTask(user.id)}
+                  onClick={() => getTask(todo.id)}
                 ></i>
-                <i className="bx bx-select-multiple"></i>
+                <i
+                  className="bx bx-select-multiple"
+                  onClick={() => postTask(todo.id)}
+                ></i>
               </div>
             </div>
           ))}
@@ -120,22 +178,21 @@ function App() {
       <div>
         <h2>Todo Done</h2>
         <ul>
-          <div>
-            <li>task</li>
-            <div>
-              <i className="bx bxs-trash"></i>
-              <i className="bx bxs-edit-alt"></i>
-              <i className="bx bx-redo bx-rotate-180"></i>
+          {todoDone.map((todo) => (
+            <div key={todo.id}>
+              <li>{todo.task}</li>
+              <div>
+                <i
+                  className="bx bxs-trash"
+                  onClick={() => deleteTaskDone(todo.id)}
+                ></i>
+                <i
+                  className="bx bx-redo bx-rotate-180"
+                  onClick={() => postTaskDone(todo.id)}
+                ></i>
+              </div>
             </div>
-          </div>
-          <div>
-            <li>task</li>
-            <div>
-              <i className="bx bxs-trash"></i>
-              <i className="bx bxs-edit-alt"></i>
-              <i className="bx bx-redo bx-rotate-180"></i>
-            </div>
-          </div>
+          ))}
         </ul>
       </div>
     </div>
