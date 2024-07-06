@@ -1,10 +1,10 @@
 function Buttons({ edit, editTask }) {
   return (
     <>
-      <button className={!edit ? "" : "noneActive"}>Add</button>
+      <button className={!edit ? "" : "inactive"}>Add</button>
       <button
         type="button"
-        className={edit ? "" : "noneActive"}
+        className={edit ? "" : "inactive"}
         onClick={() => editTask()}
       >
         Edit

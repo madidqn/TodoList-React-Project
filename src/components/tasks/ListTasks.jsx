@@ -17,8 +17,9 @@ function ListTasks({ todos, deleteTask, getTask, url }) {
       console.log(e);
     }
   }
+  //   style={todos.lentgh > 3 ? { overflowY: "scroll" } : ""}
   return (
-    <ul style={todos.lentgh > 3 ? { overflowY: "scroll" } : ""}>
+    <ul>
       {todos.map((todo) => (
         <div key={todo.id}>
           <li>{todo.task}</li>

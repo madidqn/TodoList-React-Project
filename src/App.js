@@ -12,6 +12,7 @@ function App() {
   const [todos, setTodos] = useState([]);
   const [todoDone, setTodoDone] = useState([]);
   const [idTask, setIdTask] = useState(0);
+  const [error, setError] = useState(false);
 
   // "http://localhost:5000/todoDone"
   // "http://localhost:5000/todo"
@@ -22,7 +23,7 @@ function App() {
       fetch(`${url}${list}`, {
         method: "POST",
         body: JSON.stringify({
-          task: inputValue,
+          task: inputValue.trim(),
           checked: checkBox,
         }),
         headers: {
@@ -38,10 +39,17 @@ function App() {
   // submit form
   function submit(e) {
     e.preventDefault();
-    if (checkBox) {
-      postTasks("todoDone");
+    if (inputValue === "") {
+      setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 3000);
     } else {
-      postTasks("todo");
+      if (checkBox) {
+        postTasks("todoDone");
+      } else {
+        postTasks("todo");
+      }
     }
   }
   // get tasks
@@ -61,7 +69,7 @@ function App() {
 
   // delete task
   async function deleteTask(id, list) {
-    let confirmation = window.confirm("Are you sure");
+    let confirmation = window.confirm("Are you sure ?");
     if (confirmation) {
       fetch(`${url}${list}/${id}`, {
         method: "DELETE",
@@ -81,56 +89,17 @@ function App() {
     fetch(`${url}todo/${idTask}`, {
       method: "PATCH",
       body: JSON.stringify({
-        task: inputValue,
+        task: inputValue.trim(),
         checked: checkBox,
       }),
       headers: {
         "Content-type": "aplication/json",
       },
-      // headers: { "Access-Control-Allow-Origin": "*" },
     });
     setEdit(false);
     setCheckBox(false);
     setInputValue("");
   }
-
-  // list done
-  // function submitTaskDone(id) {
-  //   const filterData = todos.filter((user) => user.id === id);
-  //   deleteTask(id, "todo");
-  //   try {
-  //     fetch(`${url}todoDone`, {
-  //       method: "POST",
-  //       body: JSON.stringify({
-  //         task: filterData[0].task,
-  //         checked: filterData[0].checked,
-  //       }),
-  //       headers: {
-  //         "Content-type": "aplication/json",
-  //       },
-  //     });
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }
-  // function sendToUndoTasks(id) {
-  //   const filterData = todoDone.filter((user) => user.id === id);
-  //   deleteTask(id, "todoDone");
-  //   try {
-  //     fetch(`${url}todo`, {
-  //       method: "POST",
-  //       body: JSON.stringify({
-  //         task: filterData[0].task,
-  //         checked: filterData[0].checked,
-  //       }),
-  //       headers: {
-  //         "Content-type": "aplication/json",
-  //       },
-  //     });
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }
 
   return (
     <div className="app">
@@ -144,23 +113,18 @@ function App() {
           checked={checkBox}
           edit={edit}
           editTask={editTask}
+          error={error}
         />
         <ListTasks
           todos={todos}
           deleteTask={deleteTask}
           getTask={getTask}
-          // submitTaskDone={submitTaskDone}
           url={url}
         />
       </div>
       <div>
         <h2>Todo Done</h2>
-        <ListTasksDone
-          todoDone={todoDone}
-          deleteTask={deleteTask}
-          // sendToUndoTasks={sendToUndoTasks}
-          url={url}
-        />
+        <ListTasksDone todoDone={todoDone} deleteTask={deleteTask} url={url} />
       </div>
     </div>
   );

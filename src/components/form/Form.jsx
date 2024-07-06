@@ -10,9 +10,11 @@ function Form({
   checked,
   edit,
   editTask,
+  error,
 }) {
   return (
     <form onSubmit={(e) => submit(e)}>
+      {error ? <p>Please enter something</p> : ""}
       <div>
         <InputTask inputValue={inputValue} setInputValue={setInputValue} />
         <InputCheckBox setCheckBox={setCheckBox} checked={checked} />
