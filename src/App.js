@@ -2,6 +2,7 @@ import { useState } from "react";
 import Form from "./components/form/Form";
 import "./App.css";
 import ListTasks from "./components/tasks/ListTasks";
+import ListTasksDone from "./components/tasks/ListTasksDone";
 
 function App() {
   const url = "http://localhost:5000/";
@@ -197,7 +198,12 @@ function App() {
       </div>
       <div>
         <h2>Todo Done</h2>
-        <ul>
+        <ListTasksDone
+          todoDone={todoDone}
+          deleteTask={deleteTask}
+          sendToUndoTasks={sendToUndoTasks}
+        />
+        {/* <ul>
           {todoDone.map((todo) => (
             <div key={todo.id}>
               <li>{todo.task}</li>
@@ -213,7 +219,7 @@ function App() {
               </div>
             </div>
           ))}
-        </ul>
+        </ul> */}
       </div>
     </div>
   );
