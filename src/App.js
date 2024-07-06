@@ -7,7 +7,8 @@ function App() {
   const [check, setCheck] = useState(false);
   const [edit, setEdit] = useState(false);
   const [todos, setTodos] = useState([]);
-  const [singleTask, setSingleTask] = useState("");
+  const [idTask, setIdTask] = useState(0);
+  // const [singleTask, setSingleTask] = useState("");
   function submit(e) {
     e.preventDefault();
     //post data
@@ -42,17 +43,21 @@ function App() {
     }
   }
   // get task
-  async function getTask(id) {
-    const response = await fetch(url + `/${id}`);
-    const task = await response.json();
-    setSingleTask(task);
-    setTask(task.task);
-    setCheck(task.checked);
+  function getTask(id) {
+    // const response = await fetch(url + `/${id}`);
+    // const task = await response.json();
+    // setSingleTask(task);
+    setEdit(true);
+    const filterData = todos.filter((user) => user.id === id);
+    setTask(filterData[0].task);
+    setCheck(filterData[0].checked);
+    setIdTask(filterData[0].id);
+    // console.log(filterData[0].task);
+    //  editTask(id);
   }
   // edit task
-  function editTask(id) {
-    getTask(id);
-    fetch(url + `/${id}`, {
+  function editTask() {
+    fetch(url + `/${idTask}`, {
       method: "PATCH",
       body: JSON.stringify({
         task: task,
@@ -62,6 +67,9 @@ function App() {
         "Content-type": "aplication/json",
       },
     });
+    setEdit(false);
+    setCheck(false);
+    setTask("");
   }
   return (
     <div className="app">
@@ -77,10 +85,15 @@ function App() {
             <input
               type="checkbox"
               onChange={(e) => setCheck(e.target.checked)}
+              checked={check}
             />
           </div>
           <button>Add</button>
-          <button type="button" className={edit ? "" : "noneActive"}>
+          <button
+            type="button"
+            className={edit ? "" : "noneActive"}
+            onClick={() => editTask()}
+          >
             Edit
           </button>
         </form>
@@ -96,28 +109,12 @@ function App() {
                 ></i>
                 <i
                   className="bx bxs-edit-alt"
-                  onClick={() => editTask(user.id)}
+                  onClick={() => getTask(user.id)}
                 ></i>
                 <i className="bx bx-select-multiple"></i>
               </div>
             </div>
           ))}
-          {/* <div>
-            <li>task</li>
-            <div>
-              <i className="bx bxs-trash"></i>
-              <i className="bx bxs-edit-alt"></i>
-              <i className="bx bx-select-multiple"></i>
-            </div>
-          </div>
-          <div>
-            <li>task</li>
-            <div>
-              <i className="bx bxs-trash"></i>
-              <i className="bx bxs-edit-alt"></i>
-              <i className="bx bx-select-multiple"></i>
-            </div>
-          </div> */}
         </ul>
       </div>
       <div>
