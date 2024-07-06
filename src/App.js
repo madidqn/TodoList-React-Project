@@ -2,7 +2,6 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
-  //const url = "http://localhost:5000/todo";
   const url = "http://localhost:5000/";
   const [inputValue, setInputValue] = useState("");
   const [checkBox, setCheckBox] = useState(false);
@@ -11,6 +10,9 @@ function App() {
   const [todoDone, setTodoDone] = useState([]);
   const [idTask, setIdTask] = useState(0);
   // completed tasks//
+  // "http://localhost:5000/todoDone"
+  // "http://localhost:5000/todo"
+
   // post tasks
   function postTasks(list) {
     try {
@@ -30,6 +32,7 @@ function App() {
       console.log(e);
     }
   }
+  // submit form
   function submit(e) {
     e.preventDefault();
     if (checkBox) {
@@ -37,22 +40,6 @@ function App() {
     } else {
       postTasks("todo");
     }
-    // try {
-    //   fetch(`${url}todo`, {
-    //     method: "POST",
-    //     body: JSON.stringify({
-    //       task: inputValue,
-    //       checked: checkBox,
-    //     }),
-    //     headers: {
-    //       "Content-type": "aplication/json",
-    //     },
-    //   });
-    //   setCheckBox(false);
-    //   setInputValue("");
-    // } catch (e) {
-    //   console.log(e);
-    // }
   }
   // get tasks
   async function getTasks(list) {
@@ -70,10 +57,10 @@ function App() {
   getTasks("todoDone");
 
   // delete task
-  function deleteTask(id) {
+  async function deleteTask(id, list) {
     let confirmation = window.confirm("Are you shure?");
     if (confirmation) {
-      fetch(`${url}todo/${id}`, {
+      fetch(`${url}${list}/${id}`, {
         method: "DELETE",
       });
     }
@@ -103,56 +90,29 @@ function App() {
     setCheckBox(false);
     setInputValue("");
   }
+
   // list done
-
-  // postTask
-  // "http://localhost:5000/todoDone"
-  // function submitTaskDone(id) {
-  //   const filterData = todos.filter((user) => user.id === id);
-  //   deleteTask(id);
-  //   try {
-  //     fetch(`${url}todoDone`, {
-  //       method: "POST",
-  //       body: JSON.stringify({
-  //         task: filterData[0].task,
-  //         checked: filterData[0].checked,
-  //       }),
-  //       headers: {
-  //         "Content-type": "aplication/json",
-  //       },
-  //     });
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }
-  // async function getDone() {
-  //   const response = await fetch(`${url}todoDone`);
-  //   const data = await response.json();
-  //   setTodoDone(data);
-  // }
-  // getDone();
-  //
-
-  //delete taskDone
-  function deleteTaskDone(id) {
-    let confirmation = window.confirm("Are you shure?");
-    if (confirmation) {
-      fetch(`${url}todoDone/${id}`, {
-        method: "DELETE",
+  function submitTaskDone(id) {
+    const filterData = todos.filter((user) => user.id === id);
+    deleteTask(id, "todo");
+    try {
+      fetch(`${url}todoDone`, {
+        method: "POST",
+        body: JSON.stringify({
+          task: filterData[0].task,
+          checked: filterData[0].checked,
+        }),
+        headers: {
+          "Content-type": "aplication/json",
+        },
       });
+    } catch (e) {
+      console.log(e);
     }
   }
-  function sendToUndoTasks(id, list) {
-    // const filterData = todoDone.filter((user) => user.id === id);
-    let filterData;
-    // deleteTaskDone(id);
-    if (list === "todoDone") {
-      filterData = todoDone.filter((user) => user.id === id);
-      deleteTaskDone(id);
-    } else {
-      filterData = todos.filter((user) => user.id === id);
-      deleteTask(id);
-    }
+  function sendToUndoTasks(id) {
+    const filterData = todoDone.filter((user) => user.id === id);
+    deleteTask(id, "todoDone");
     try {
       fetch(`${url}todo`, {
         method: "POST",
@@ -168,6 +128,7 @@ function App() {
       console.log(e);
     }
   }
+
   return (
     <div className="app">
       <div>
@@ -202,7 +163,7 @@ function App() {
                 {todo.checked}
                 <i
                   className="bx bxs-trash"
-                  onClick={() => deleteTask(todo.id)}
+                  onClick={() => deleteTask(todo.id, "todo")}
                 ></i>
                 <i
                   className="bx bxs-edit-alt"
@@ -210,7 +171,7 @@ function App() {
                 ></i>
                 <i
                   className="bx bx-select-multiple"
-                  onClick={() => sendToUndoTasks(todo.id, "todoDone")}
+                  onClick={() => submitTaskDone(todo.id)}
                 ></i>
               </div>
             </div>
@@ -226,11 +187,11 @@ function App() {
               <div>
                 <i
                   className="bx bxs-trash"
-                  onClick={() => deleteTaskDone(todo.id)}
+                  onClick={() => deleteTask(todo.id, "todoDone")}
                 ></i>
                 <i
                   className="bx bx-redo bx-rotate-180"
-                  onClick={() => sendToUndoTasks(todo.id, "todo")}
+                  onClick={() => sendToUndoTasks(todo.id)}
                 ></i>
               </div>
             </div>

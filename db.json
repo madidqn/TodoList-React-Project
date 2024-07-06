@@ -1,15 +1,4 @@
 {
-  "todo": [
-    {
-      "id": "46fa",
-      "task": "al",
-      "checked": false
-    },
-    {
-      "id": "eecd",
-      "task": "al",
-      "checked": true
-    }
-  ],
+  "todo": [],
   "todoDone": []
 }
