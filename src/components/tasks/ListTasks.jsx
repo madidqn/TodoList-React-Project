@@ -17,7 +17,6 @@ function ListTasks({ todos, deleteTask, getTask, url }) {
       console.log(e);
     }
   }
-  //   style={todos.lentgh > 3 ? { overflowY: "scroll" } : ""}
   return (
     <ul>
       {todos.map((todo) => (

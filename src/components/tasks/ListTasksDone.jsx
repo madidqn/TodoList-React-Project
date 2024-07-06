@@ -17,7 +17,6 @@ function ListTasksDone({ todoDone, deleteTask, url }) {
       console.log(e);
     }
   }
-  //   style={todoDone.lentgh > 6 ? { overflowY: scroll } : ""}
   return (
     <ul>
       {todoDone.map((todo) => (
