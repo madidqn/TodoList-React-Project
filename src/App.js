@@ -158,7 +158,7 @@ function App() {
         </form> */}
         <Form
           submit={submit}
-          value={inputValue}
+          inputValue={inputValue}
           setInputValue={setInputValue}
           setCheckBox={setCheckBox}
           checked={checkBox}

@@ -15,6 +15,7 @@ function Form({
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
+        <InputTask inputValue={inputValue} setInputValue={setInputValue} />
         <input
           type="checkbox"
           onChange={(e) => setCheckBox(e.target.checked)}
