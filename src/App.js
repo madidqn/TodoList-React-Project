@@ -119,7 +119,6 @@ function App() {
         {todos.length > 0 ? (
           <ListTasks
             todos={todos}
-            lenght={todos.length}
             deleteTask={deleteTask}
             getTask={getTask}
             url={url}
