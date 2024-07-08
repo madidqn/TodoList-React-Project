@@ -16,7 +16,6 @@ function App() {
 
   // "http://localhost:5000/todoDone"
   // "http://localhost:5000/todo"
-  // https://github.com/madidqn/TodoList-React-Project
 
   // post tasks
   function postTasks(list) {
