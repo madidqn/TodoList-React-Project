@@ -87,6 +87,16 @@ form button:hover {
 .inactive {
   display: none;
 }
+.empty {
+  margin-top: 100px;
+  text-align: center;
+  width: 50%;
+  border-radius: 5px;
+  padding: 0.6rem 10px;
+  font-size: 1.4rem;
+  color: aliceblue;
+  background-color: rgb(193, 55, 55);
+}
 ul {
   width: 100%;
   padding: 10px 0;

@@ -116,16 +116,29 @@ function App() {
           editTask={editTask}
           error={error}
         />
-        <ListTasks
-          todos={todos}
-          deleteTask={deleteTask}
-          getTask={getTask}
-          url={url}
-        />
+        {todos.length > 0 ? (
+          <ListTasks
+            todos={todos}
+            lenght={todos.length}
+            deleteTask={deleteTask}
+            getTask={getTask}
+            url={url}
+          />
+        ) : (
+          <p className="empty">There is not task</p>
+        )}
       </div>
       <div>
         <h2>Todo Done</h2>
-        <ListTasksDone todoDone={todoDone} deleteTask={deleteTask} url={url} />
+        {todoDone.length > 0 ? (
+          <ListTasksDone
+            todoDone={todoDone}
+            deleteTask={deleteTask}
+            url={url}
+          />
+        ) : (
+          <p className="empty">There is not task</p>
+        )}
       </div>
     </div>
   );
