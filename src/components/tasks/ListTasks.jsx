@@ -1,5 +1,5 @@
-function ListTasks({ todos, deleteTask, getTask, url }) {
-  function submitTaskDone(id) {
+function ListTasks({ todos, deleteTask, getTask, url, dispatch }) {
+  const submitTaskDone = (id) => {
     const filterData = todos.filter((user) => user.id === id);
     deleteTask(id, "todo");
     try {
@@ -16,7 +16,7 @@ function ListTasks({ todos, deleteTask, getTask, url }) {
     } catch (e) {
       console.log(e);
     }
-  }
+  };
   return (
     <ul>
       {todos.map((todo) => (
@@ -28,7 +28,12 @@ function ListTasks({ todos, deleteTask, getTask, url }) {
               className="bx bxs-trash"
               onClick={() => deleteTask(todo.id, "todo")}
             ></i>
-            <i className="bx bxs-edit-alt" onClick={() => getTask(todo.id)}></i>
+            <i
+              className="bx bxs-edit-alt"
+              onClick={() =>
+                dispatch({ type: "edit-icon", payload: todo.id, func: getTask })
+              }
+            ></i>
             <i
               className="bx bx-select-multiple"
               onClick={() => submitTaskDone(todo.id)}

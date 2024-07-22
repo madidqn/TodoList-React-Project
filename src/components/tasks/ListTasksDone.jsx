@@ -1,5 +1,5 @@
 function ListTasksDone({ todoDone, deleteTask, url }) {
-  function sendToUndoTasks(id) {
+  const sendToUndoTasks = (id) => {
     const filterData = todoDone.filter((user) => user.id === id);
     deleteTask(id, "todoDone");
     try {
@@ -16,7 +16,7 @@ function ListTasksDone({ todoDone, deleteTask, url }) {
     } catch (e) {
       console.log(e);
     }
-  }
+  };
   return (
     <ul>
       {todoDone.map((todo) => (

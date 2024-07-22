@@ -1,23 +1,32 @@
 import InputTask from "./InputTask";
-import InputCheckBox from "./InputCheckBox";
 import Buttons from "./Buttons";
 
-function Form({
-  submit,
-  inputValue,
-  setInputValue,
-  setCheckBox,
-  checked,
-  edit,
-  editTask,
-  error,
-}) {
+function Form({ submit, state, dispatch, edit, editTask }) {
   return (
-    <form onSubmit={(e) => submit(e)}>
-      {error ? <p>Please enter something</p> : ""}
+    <form
+      onSubmit={(e) => dispatch({ type: "submit", payload: e, func: submit })}
+    >
+      {state.error ? <p>Please enter something</p> : ""}
       <div>
-        <InputTask inputValue={inputValue} setInputValue={setInputValue} />
-        <InputCheckBox setCheckBox={setCheckBox} checked={checked} />
+        <InputTask>
+          <input
+            type="text"
+            placeholder="Please enter your task"
+            value={state.inputValue}
+            onChange={(e) =>
+              dispatch({ type: "task", payload: e.target.value })
+            }
+          />
+        </InputTask>
+        <InputTask>
+          <input
+            type="checkbox"
+            onChange={(e) =>
+              dispatch({ type: "check", payload: e.target.checked })
+            }
+            checked={state.inputCheckBox}
+          />
+        </InputTask>
       </div>
       <Buttons edit={edit} editTask={editTask} />
     </form>
